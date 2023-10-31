@@ -219,26 +219,34 @@ void initState() {
             ),
           ),
           Center(
-            child: Consumer<Steps>(
-              builder: (context, provider, child){
-                return ElevatedButton(
-                  onPressed: () async{
+            child: Consumer(
+              builder: (context,ThemeModal themeNotifiter,child) {
+                return Consumer<Steps>(
+                  builder: (context, provider, child){
+                    return ElevatedButton(
+                        style: ButtonStyle(backgroundColor: MaterialStateColor.resolveWith((states) {
 
-                             final name = myname.text;
-                             final phoneNumber = myphonenumber.text;
-                              final lastname=mysurname.text;
-                              if (name.isNotEmpty && phoneNumber.isNotEmpty) {
-                              final newContact = mainContact(name, phoneNumber,lastname);
-                              if (newContact != null) {
-                                Provider.of<ContactListProvider>(context, listen: false).addContact(newContact as mainContact);
-                              }
-                              }
-                    final prefs=await SharedPreferences.getInstance();
-                    prefs.setBool(Screen1State.KEYLOGIN, true);
+                          return themeNotifiter.isDark? Colors.white:Colors.black;
+                    })),
+                      onPressed: () async{
 
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => ContactListScreen(),));
-                  },
-                  child: Text("Submit"),
+                                 final name = myname.text;
+                                 final phoneNumber = myphonenumber.text;
+                                  final lastname=mysurname.text;
+                                  if (name.isNotEmpty && phoneNumber.isNotEmpty) {
+                                  final newContact = MainContact(name, phoneNumber,lastname);
+                                  if (newContact != null) {
+                                    Provider.of<ContactListProvider>(context, listen: false).addContact(newContact as MainContact);
+                                  }
+                                  }
+                        final prefs=await SharedPreferences.getInstance();
+                        prefs.setBool(Screen1State.KEYLOGIN, true);
+
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => ContactListScreen(),));
+                      },
+                      child: Text("Submit",style: TextStyle(color: themeNotifiter.isDark?Colors.black:Colors.white,),),
+                    );
+                  }
                 );
               }
             ),

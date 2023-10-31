@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:contact/Screen2.dart';
+import 'package:contact/main.dart';
 import 'package:flutter/material.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:provider/provider.dart';
@@ -66,17 +67,22 @@ class Screen1State extends State<Screen1>
   Widget build(BuildContext context) {
 
     // TODO: implement build
-    return Scaffold(
-      body: Column(crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Center(
-            child: Icon(Icons.contacts,color: Colors.black,size: 80,),
+    return Consumer(
+      builder: (context,ThemeModal themeNotifiter,child) {
+        return Scaffold(
+
+          body: Column(crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Center(
+                child: Icon(Icons.contacts,color:themeNotifiter.isDark? Colors.white:Colors.black,size: 80,),
+              ),
+              Center(child: Padding(padding: EdgeInsets.only(top: 50,),
+                  child:Text("Contact app",style: TextStyle(color: themeNotifiter.isDark? Colors.white:Colors.black,fontSize: 23),) ,) ),
+            ],
           ),
-          Center(child: Padding(padding: EdgeInsets.only(top: 50,),
-              child:Text("Contact app",style: TextStyle(color: Colors.black,fontSize: 23),) ,) ),
-        ],
-      ),
+        );
+      }
     );
   }
 void wheretigo()async

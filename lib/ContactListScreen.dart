@@ -27,6 +27,7 @@ class ContactListScreenState extends State<ContactListScreen> {
     return Consumer(
       builder: (context, ThemeModal themeNotifiter, child) {
         return Scaffold(
+
           appBar: AppBar(
             backgroundColor: themeNotifiter.isDark?Colors.black:Colors.white,
             title: Text(
@@ -47,8 +48,8 @@ class ContactListScreenState extends State<ContactListScreen> {
                 itemBuilder: (context, index) {
                   final contact = contacts[index];
                   return ListTile(
-                    title: Text("${contact.name}  ${contact.lastname}"),
-                    subtitle: Text(contact.phoneNumber),
+                    title: Text("${contact.name}  ${contact.lastname}",style: TextStyle(color: themeNotifiter.isDark? Colors.white:Colors.black)),
+                    subtitle: Text(contact.phoneNumber,style: TextStyle(color: themeNotifiter.isDark? Colors.white:Colors.black)),
                     leading: CircleAvatar(
                       backgroundColor: themeNotifiter.isDark?Colors.white:Colors.black,
                       child: Icon(Icons.person,color: Colors.grey,size: 20,),
@@ -57,7 +58,7 @@ class ContactListScreenState extends State<ContactListScreen> {
                       itemBuilder: (context) => [
                         PopupMenuItem(
                           child: TextButton.icon(
-                            label: Text('Edit',style: TextStyle(color: Colors.black),),
+                            label: Text('Edit',style: TextStyle(color: themeNotifiter.isDark? Colors.white:Colors.black)),
                             icon: Icon(Icons.edit,color: themeNotifiter.isDark?Colors.white:Colors.black,),
                             onPressed: () async {
                               final editedContact = await Navigator.push(
@@ -70,35 +71,36 @@ class ContactListScreenState extends State<ContactListScreen> {
                                 ),
                               );
                               if (editedContact != null) {
-                                provider.updateContact(index, editedContact as mainContact);
+                                provider.updateContact(index, editedContact as MainContact);
                               }
                             },
                           ),
                         ),
                         PopupMenuItem(
                           child: TextButton.icon(
-                            label: Text('Delete',style: TextStyle(color: Colors.black),),
+                            label: Text('Delete',style: TextStyle(color: themeNotifiter.isDark? Colors.white:Colors.black),),
                             icon: Icon(Icons.delete,color: themeNotifiter.isDark?Colors.white:Colors.black,),
                             onPressed: () {
                               showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
                                   return AlertDialog(
-                                    title: Text('Delete Contact'),
-                                    content: Text('Are you sure you want to delete this contact?'),
+
+                                    title: Text('Delete Contact',style: TextStyle(color: themeNotifiter.isDark? Colors.white:Colors.black),),
+                                    content: Text('Are you sure you want to delete this contact?',style: TextStyle(color: themeNotifiter.isDark? Colors.white:Colors.black)),
                                     actions: [
                                       TextButton(
                                         onPressed: () {
                                           Navigator.of(context).pop();
                                         },
-                                        child: Text('Cancel'),
+                                        child: Text('Cancel',style: TextStyle(color: themeNotifiter.isDark? Colors.white:Colors.black)),
                                       ),
                                       TextButton(
                                         onPressed: () {
                                           provider.deleteContact(index);
                                           Navigator.of(context).pop();
                                         },
-                                        child: Text('Delete'),
+                                        child: Text('Delete',style: TextStyle(color: themeNotifiter.isDark? Colors.white:Colors.black)),
                                       ),
                                     ],
                                   );
@@ -120,11 +122,11 @@ class ContactListScreenState extends State<ContactListScreen> {
             onPressed: () {
               Navigator.pushNamed(context, '/addContact').then((newContact) {
                 if (newContact != null) {
-                  Provider.of<ContactListProvider>(context, listen: false).addContact(newContact as mainContact);
+                  Provider.of<ContactListProvider>(context, listen: false).addContact(newContact as MainContact);
                 }
               });
             },
-            child: Icon(Icons.add),
+            child: Icon(Icons.add,color: themeNotifiter.isDark?Colors.black:Colors.white,),
           ),
         );
       },
@@ -134,7 +136,7 @@ class ContactListScreenState extends State<ContactListScreen> {
 }
 
 class ContactListProvider extends ChangeNotifier {
-  List<mainContact> contacts = [];
+  List<MainContact> contacts = [];
   bool _swi=false;
   bool get isswi =>_swi;
 
@@ -145,17 +147,17 @@ class ContactListProvider extends ChangeNotifier {
     if (contactsData != null) {
       contacts = contactsData.map((data) {
         final parts = data.split(',');
-        return mainContact(parts[0], parts[1],parts[2]);
+        return MainContact(parts[0], parts[1],parts[2]);
       }).toList();
       notifyListeners();
     }
   }
-  void addContact(mainContact newContact) {
+  void addContact(MainContact newContact) {
     contacts.add(newContact);
     saveContacts();
     notifyListeners();
   }
-  void updateContact(int index, mainContact updatedContact) {
+  void updateContact(int index, MainContact updatedContact) {
     contacts[index] = updatedContact;
     saveContacts();
     notifyListeners();

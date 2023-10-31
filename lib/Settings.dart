@@ -1,11 +1,6 @@
 import 'package:contact/ContactListScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import 'ContactListScreen.dart';
-import 'ContactListScreen.dart';
-import 'Screen1.dart';
 import 'main.dart';
 
 class Settings extends StatefulWidget
@@ -35,12 +30,13 @@ class SettingsState extends State<Settings>
     final provider=Provider.of<ContactListProvider>(context);
     final d = MediaQuery.of(context).platformBrightness;
     return Consumer(
-      builder:(context, ThemeModal themeNotifier, child){
+      builder:(context, ThemeModal themeNotifiter, child){
         return Scaffold(
+
           appBar: AppBar(
-            backgroundColor: themeNotifier.isDark?Colors.black:Colors.white,
+            backgroundColor: themeNotifiter.isDark?Colors.black:Colors.white,
             title: Text(
-              'Settings', style: TextStyle(color: themeNotifier.isDark?Colors.white:Colors.black, fontSize: 20),),
+              'Settings', style: TextStyle(color: themeNotifiter.isDark?Colors.white:Colors.black, fontSize: 20),),
             centerTitle: true,
 
           ),
@@ -64,10 +60,10 @@ class SettingsState extends State<Settings>
                 child: GestureDetector(
                   onTap: () {
                     setState(() {
-                      if (themeNotifier.isDark) {
+                      if (themeNotifiter.isDark) {
 
                       } else {
-                        themeNotifier.isDark = true;
+                        themeNotifiter.isDark = true;
                       }
                       print(d);
                     });
@@ -86,8 +82,8 @@ class SettingsState extends State<Settings>
                 child: GestureDetector(
                   onTap: () {
                     setState(() {
-                      if (themeNotifier.isDark) {
-                        themeNotifier.isDark = false;
+                      if (themeNotifiter.isDark) {
+                        themeNotifiter.isDark = false;
                       }
                     });
                   },
@@ -107,10 +103,10 @@ class SettingsState extends State<Settings>
                   onTap: () {
                     setState(() {
                       if (d == Brightness.light) {
-                        themeNotifier.isDark = false;
+                        themeNotifiter.isDark = false;
                       }
                       else {
-                        themeNotifier.isDark = true;
+                        themeNotifiter.isDark = true;
                       }
                     });
                   },

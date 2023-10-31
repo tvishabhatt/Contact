@@ -13,9 +13,7 @@ import 'EditContactScreen.dart';
 
 
 void main() async{
-  // final provider=ContactListProvider();
-  //  await  provider.loadBool();
-  // SharedPreferences preferences = await SharedPreferences.getInstance();
+
 
   runApp(
     MultiProvider(providers: [
@@ -54,12 +52,12 @@ class MyApp extends StatelessWidget {
 }
 
 
-class mainContact {
+class MainContact {
   String name;
   String phoneNumber;
   String lastname;
 
-  mainContact(this.name, this.phoneNumber,this.lastname);
+  MainContact(this.name, this.phoneNumber,this.lastname);
 }
 class ThemePreferances {
   static const  PREF_KEY = 'perf-key';
